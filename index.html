@@ -1668,17 +1668,18 @@ function generateCV(profileId){
     </div>
   `).join('');
 
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('es-ES', {day:'numeric',month:'long',year:'numeric'});
-  const timeStr = now.toLocaleTimeString('es-ES', {hour:'2-digit',minute:'2-digit'});
-
-  const filename = 'CV_RandyBonucci_' + p.title.replace(/[^a-zA-Z0-9]/g,'_');
-
-  const html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + filename + '</title><style>'
+  const html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title><style>'
     + '@page{margin:18mm 15mm}'
-    + 'body{font-family:Arial,sans-serif;font-size:11px;color:#222;line-height:1.5;margin:0;padding:0}'
-    + '.top{text-align:right;font-size:10px;color:#888;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #ccc}'
-    + '.top span{margin-left:10px}'
+    + 'body{margin:0;padding:0;background:#fff}'
+    + '#cv{display:none}'
+    + '.msg{text-align:center;padding-top:45vh;font-family:sans-serif;color:#aaa;font-size:14px}'
+    + '.footer{display:none;text-align:center;font-size:10px;color:#888;margin-top:20px;padding-top:8px;border-top:1px solid #ccc}'
+    + '@media print{'
+    + 'body{background:none}'
+    + '#cv{display:block;font-family:Arial,sans-serif;font-size:11px;color:#222;line-height:1.5}'
+    + '.msg{display:none}'
+    + '.footer{display:block}'
+    + '}'
     + 'table{width:100%;border-collapse:collapse}'
     + 'td.l{width:62%;padding-right:20px;vertical-align:top}'
     + 'td.r{width:38%;vertical-align:top;background:#f0f7fa;padding:12px;border-radius:4px}'
@@ -1688,7 +1689,7 @@ function generateCV(profileId){
     + '.sec{font-size:13px;font-weight:700;color:#001f3f;border-bottom:2px solid #0077b6;padding-bottom:3px;margin:14px 0 8px}'
     + '.sh{font-size:11px;font-weight:700;color:#001f3f;text-transform:uppercase;border-bottom:1px solid #b3d9e8;padding-bottom:3px;margin:0 0 6px}'
   + '</style></head><body>'
-    + '<div class="top">' + dateStr + '<span>' + timeStr + '</span></div>'
+    + '<div class="msg">Preparando PDF...</div>'
     + '<table><tr>'
     + '<td class="l">'
       + '<h1>Randy Bonucci Mart\u00edn</h1>'
@@ -1721,12 +1722,13 @@ function generateCV(profileId){
       + '</div></div>'
     + '</td>'
     + '</tr></table>'
+    + '<div class="footer">Curriculum Vitae</div>'
     + '<script>setTimeout(function(){window.print()},500);<\/script>'
   + '</body></html>';
 
-  const blob = new Blob([html], {type:'text/html'});
-  const url = URL.createObjectURL(blob);
-  window.open(url, '_blank');
+  const w = window.open('about:blank', '_blank');
+  w.document.write(html);
+  w.document.close();
 }
 
 /* init cv grid on dom ready */
