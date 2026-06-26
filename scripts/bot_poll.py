@@ -34,15 +34,10 @@ def main():
     for u in updates:
         msg = u.get('message', {})
         chat_id = msg.get('chat', {}).get('id')
-        text = msg.get('text', '') or ''
         if not chat_id:
             continue
-        if text.startswith('/start'):
-            reply = '\u2705 \u00a1Hola! Soy el asistente de Randy Bonucci.\nSoy Ingeniero Inform\u00e1tico especializado en Ciberseguridad, Data Analytics e IA.\n\u00bfEn qu\u00e9 puedo ayudarte?'
-        else:
-            reply = '\u2705 Tu mensaje ha sido recibido. Randy lo revisar\u00e1 y te responder\u00e1 pronto.\n\u23f3 Tiempo estimado de respuesta: < 24h.\n\ud83d\udcce linkedin.com/in/randy-bonucci-mart\u00edn-b60824209'
-        send_message(chat_id, reply)
-        print(f'Replied to chat {chat_id}')
+        send_message(chat_id, '\u26a0\ufe0f Este bot solo procesa solicitudes de contacto a trav\u00e9s de la landing page oficial.')
+        print(f'Replied to direct user {chat_id}')
 
     last_id = updates[-1]['update_id']
     with open(OFFSET_FILE, 'w') as f:
