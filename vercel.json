@@ -1,1 +1,7 @@
-{}
+{
+  "functions": {
+    "api/contact.js": { "memory": 128 },
+    "api/webhook.js": { "memory": 128 }
+  },
+  "outputDirectory": "."
+}
