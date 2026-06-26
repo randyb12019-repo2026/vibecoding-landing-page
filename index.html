@@ -1318,12 +1318,28 @@ function askMessage() {
     addUserMessage(val.trim());
     removeOptions();
     chatInputArea.classList.add('hidden');
-    setTimeout(askSecurity, 400);
+    setTimeout(askContact, 400);
+  });
+}
+
+function askContact() {
+  chatState.step = 5;
+  addBotMessage('&#x1f4e7; ¿Cuál es tu <strong>correo electrónico</strong> o <strong>usuario de Telegram</strong> para que Randy pueda responderte?');
+  showInput('ejemplo@correo.com o @usuario', val => {
+    const v = val.trim();
+    if (v.length < 5) return;
+    if (v.includes('@') || v.startsWith('@') || v.includes('.')) {
+      collectedData.contact = v;
+      addUserMessage(v);
+      removeOptions();
+      chatInputArea.classList.add('hidden');
+      setTimeout(askSecurity, 400);
+    }
   });
 }
 
 function askSecurity() {
-  chatState.step = 5;
+  chatState.step = 6;
   const a = Math.floor(Math.random() * 10) + 3;
   const b = Math.floor(Math.random() * 10) + 2;
   chatState.securityAnswer = a + b;
@@ -1355,7 +1371,8 @@ function showSummary() {
     <strong>Resumen:</strong><br>
     &#x1f464; ${collectedData.name}<br>
     &#x1f3e2; ${collectedData.company}<br>
-    &#x1f4ac; ${collectedData.reason}<br><br>
+    &#x1f4ac; ${collectedData.reason}<br>
+    &#x1f4e7; ${collectedData.contact}<br><br>
     <span style="color:var(--text2);font-size:.8rem">Haz clic en <strong>Enviar</strong> para que Randy reciba tu mensaje directamente.</span>
   `);
 
@@ -1392,7 +1409,8 @@ function showSummary() {
           name: collectedData.name,
           company: collectedData.company,
           reason: collectedData.reason,
-          message: collectedData.message
+          message: collectedData.message,
+          contact: collectedData.contact
         })
       });
 

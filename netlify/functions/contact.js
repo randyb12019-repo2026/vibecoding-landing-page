@@ -12,12 +12,13 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 200, headers, body: 'OK' };
 
   try {
-    const { name, company, reason, message } = JSON.parse(event.body);
+    const { name, company, reason, message, contact } = JSON.parse(event.body);
 
     const text = `<b>📩 Nuevo contacto desde la web</b>
 
 <b>👤 Nombre:</b> ${name}
 <b>🏢 Empresa:</b> ${company || '<i>No especificada</i>'}
+<b>📧 Contacto:</b> ${contact}
 <b>📌 Motivo:</b> ${reason}
 
 <b>📝 Mensaje:</b>
