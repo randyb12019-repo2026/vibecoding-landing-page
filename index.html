@@ -6,6 +6,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Randy Bonucci Martín | Ciberseguridad & IA</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -483,6 +484,27 @@ footer .heart{color:var(--accent)}
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
+/* CV Section */
+.cv-section{position:relative;z-index:1;padding:5rem 2rem}
+.cv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;max-width:1200px;margin:0 auto}
+.cv-card{
+  background:var(--surface);border:1px solid rgba(0,240,255,0.08);border-radius:12px;
+  padding:1.5rem;cursor:pointer;transition:.3s;position:relative;overflow:hidden
+}
+.cv-card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,240,255,0.1)}
+.cv-card .icon{font-size:2rem;margin-bottom:.5rem}
+.cv-card h3{font-size:1rem;margin-bottom:.3rem;color:var(--text)}
+.cv-card p{font-size:.8rem;color:var(--text2);line-height:1.5}
+.cv-card .badge{
+  display:inline-block;margin-top:.6rem;padding:.2rem .7rem;border-radius:100px;
+  font-size:.7rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:1px
+}
+.cv-card .badge.cyan{background:rgba(0,240,255,0.1);color:var(--primary);border:1px solid rgba(0,240,255,0.2)}
+.cv-card .badge.green{background:rgba(0,255,136,0.1);color:var(--secondary);border:1px solid rgba(0,255,136,0.2)}
+.cv-card .badge.purple{background:rgba(168,85,247,0.1);color:var(--purple);border:1px solid rgba(168,85,247,0.2)}
+.cv-card .badge.orange{background:rgba(255,107,53,0.1);color:var(--accent2);border:1px solid rgba(255,107,53,0.2)}
+.cv-card .badge.pink{background:rgba(255,0,64,0.1);color:var(--accent);border:1px solid rgba(255,0,64,0.2)}
+
 /* Responsive */
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;gap:2rem;text-align:center}
@@ -522,7 +544,9 @@ footer .heart{color:var(--accent)}
     <li><a href="#bootcamp">Bootcamp</a></li>
     <li><a href="#experiencia">Experiencia</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#certificaciones">Certs</a></li>
     <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#cv">CV</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <button class="menu-toggle" id="menuToggle" aria-label="Menú">&#9776;</button>
@@ -1069,6 +1093,17 @@ footer .heart{color:var(--accent)}
   </div>
 </section>
 
+<!-- CV -->
+<section class="cv-section" id="cv">
+  <div class="container">
+    <div class="section-title reveal">
+      <h2>Currículum <span>Vitae</span></h2>
+      <p>Selecciona el perfil profesional y descarga el PDF adaptado al puesto</p>
+    </div>
+    <div class="cv-grid" id="cvGrid"></div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact-section" id="contacto">
   <div class="container">
@@ -1509,6 +1544,236 @@ function triggerInput() {
     chatState.inputCallback(val);
   }
 }
+
+// ─── CV PDF Generator ──────────────────────────────────────────
+const CV_PROFILES = [
+  {
+    id:'ciberseguridad', icon:'\u{1f6e1}\u{fe0f}', title:'Analista de Ciberseguridad',
+    badge:'cyan', badgeText:'Alta demanda',
+    summary:'Profesional de la ciberseguridad con s\u00f3lida experiencia en hardening, an\u00e1lisis de vulnerabilidades y formaci\u00f3n en seguridad inform\u00e1tica. Capacidad para dise\u00f1ar e implementar pol\u00edticas de seguridad, realizar auditor\u00edas t\u00e9cnicas y proteger infraestructuras cr\u00edticas.',
+    summaryEn:'Cybersecurity professional with solid experience in hardening, vulnerability analysis and IT security training. Skilled in designing security policies, performing technical audits and protecting critical infrastructures.',
+    exp:[0,4], skills:[0,1,2,3], certs:[6,8], focusSkills:['Linux / Windows Server','Seguridad Inform\u00e1tica','Hardening / Vulnerabilidades','Redes y Virtualizaci\u00f3n']
+  },
+  {
+    id:'data-analytics', icon:'\u{1f4ca}', title:'Data Analyst',
+    badge:'purple', badgeText:'+40% contrataci\u00f3n',
+    summary:'Analista de datos con formaci\u00f3n avanzada en estad\u00edstica, visualizaci\u00f3n y machine learning. Experiencia en extracci\u00f3n, limpieza y an\u00e1lisis de datos con Python, SQL y Power BI. Capacidad para transformar datos en decisiones de negocio.',
+    summaryEn:'Data analyst with advanced training in statistics, visualization and machine learning. Experienced in data extraction, cleaning and analysis with Python, SQL and Power BI. Ability to turn data into business decisions.',
+    exp:[3,4], skills:[4,5,6,7], certs:[4,7,9], focusSkills:['Python','SQL / Bases de Datos','Power BI / Fabric','Machine Learning']
+  },
+  {
+    id:'ia-ml', icon:'\u{1f916}', title:'Ingeniero de IA & Machine Learning',
+    badge:'purple', badgeText:'Perfil emergente',
+    summary:'Ingeniero inform\u00e1tico especializado en inteligencia artificial y machine learning con s\u00f3lida base matem\u00e1tica y de programaci\u00f3n. Experiencia en an\u00e1lisis predictivo, clasificaci\u00f3n y automatizaci\u00f3n inteligente aplicada a ciberseguridad.',
+    summaryEn:'Computer engineer specialized in AI and machine learning with a solid mathematical and programming background. Experienced in predictive analysis, classification and intelligent automation applied to cybersecurity.',
+    exp:[3,4], skills:[4,5,6,7], certs:[2,9], focusSkills:['Python','Machine Learning','SQL / Bases de Datos','Power BI / Fabric']
+  },
+  {
+    id:'programador', icon:'\u{1f4bb}', title:'Analista Programador / Full Stack',
+    badge:'green', badgeText:'11+ a\u00f1os exp.',
+    summary:'Analista programador con m\u00e1s de 11 a\u00f1os de experiencia en an\u00e1lisis, dise\u00f1o e implementaci\u00f3n de sistemas. S\u00f3lida base en desarrollo de software, bases de datos y automatizaci\u00f3n de procesos. Enfoque en c\u00f3digo limpio y buenas pr\u00e1cticas.',
+    summaryEn:'Systems analyst programmer with over 11 years of experience in analysis, design and implementation of systems. Solid background in software development, databases and process automation. Focus on clean code and best practices.',
+    exp:[3], skills:[4,5,8,9], certs:[1,2,3], focusSkills:['Python','SQL / Bases de Datos','Git / CI/CD','Selenium / Cypress']
+  },
+  {
+    id:'qa', icon:'\u{1f4a1}', title:'QA & Automation Engineer',
+    badge:'orange', badgeText:'+35% demanda',
+    summary:'Ingeniero de calidad con amplia experiencia en pruebas automatizadas y manuales. Dominio de Selenium, Cypress y API testing. Enfoque en garantizar la calidad del software mediante metodolog\u00edas \u00e1giles y pipelines CI/CD.',
+    summaryEn:'Quality engineer with extensive experience in automated and manual testing. Proficient in Selenium, Cypress and API testing. Focused on ensuring software quality through agile methodologies and CI/CD pipelines.',
+    exp:[3], skills:[8,9,10,11], certs:[2], focusSkills:['Selenium / Cypress','API Testing (Postman, REST)','Testing Manual / Casos de prueba','Git / CI/CD']
+  },
+  {
+    id:'devops', icon:'\u{2699}\u{fe0f}', title:'DevOps & SysAdmin',
+    badge:'cyan', badgeText:'Perfil h\u00edbrido',
+    summary:'Administrador de sistemas con experiencia en operaciones IT, virtualizaci\u00f3n y automatizaci\u00f3n. Conocimiento avanzado de Linux, Windows Server y redes. Enfoque en infraestructura como c\u00f3digo y monitorizaci\u00f3n de sistemas.',
+    summaryEn:'Systems administrator with experience in IT operations, virtualization and automation. Advanced knowledge of Linux, Windows Server and networking. Focus on infrastructure as code and system monitoring.',
+    exp:[2,3], skills:[0,1,11], certs:[], focusSkills:['Linux / Windows Server','Redes y Virtualizaci\u00f3n','Git / CI/CD','Seguridad Inform\u00e1tica']
+  },
+  {
+    id:'docencia', icon:'\u{1f3eb}', title:'Docente T\u00e9cnico / Formador IT',
+    badge:'pink', badgeText:'FP y Universidad',
+    summary:'Docente con experiencia en formaci\u00f3n profesional y universitaria en ciberseguridad, redes y sistemas. Capacidad para transmitir conceptos t\u00e9cnicos complejos de forma clara. Certificado de profesionalidad como formador ocupacional.',
+    summaryEn:'Instructor with experience in vocational and university training in cybersecurity, networking and systems. Ability to clearly convey complex technical concepts. Certified as an occupational trainer.',
+    exp:[0,4], skills:[0,1,2,12,13,14,15,16], certs:[5,6], focusSkills:['Comunicaci\u00f3n y Docencia','Linux / Windows Server','Redes y Virtualizaci\u00f3n','Seguridad Inform\u00e1tica']
+  },
+  {
+    id:'infraestructura', icon:'\u{1f4e1}', title:'T\u00e9cnico Infraestructura IT',
+    badge:'green', badgeText:'Soporte cr\u00edtico',
+    summary:'T\u00e9cnico de infraestructura con experiencia en instalaci\u00f3n, configuraci\u00f3n y operaci\u00f3n de sistemas inform\u00e1ticos. Habilidades en virtualizaci\u00f3n, redes, mantenimiento de equipos y resoluci\u00f3n de incidencias t\u00e9cnicas.',
+    summaryEn:'IT infrastructure technician experienced in installation, configuration and operation of computer systems. Skilled in virtualization, networking, hardware maintenance and technical troubleshooting.',
+    exp:[1,2,3], skills:[0,1], certs:[], focusSkills:['Linux / Windows Server','Redes y Virtualizaci\u00f3n','Seguridad Inform\u00e1tica','Testing Manual / Casos de prueba']
+  }
+];
+
+const EXP_DATA = [
+  {title:'Docente en Seguridad Inform\u00e1tica (IFCT0109)', company:'', date:'Feb 2025 \u2014 Nov 2024', desc:'Impartici\u00f3n del Certificado de Profesionalidad en Seguridad Inform\u00e1tica. Formaci\u00f3n en ciberseguridad, hardening de sistemas, an\u00e1lisis de vulnerabilidades y legislaci\u00f3n vigente.'},
+  {title:'T\u00e9cnico Audiovisual y Sistemas Multimedia', company:'', date:'Mar 2023 \u2014 Ene 2024', desc:'Instalaci\u00f3n, configuraci\u00f3n y operaci\u00f3n de equipos audiovisuales. Integraci\u00f3n hardware/software, resoluci\u00f3n de incidencias t\u00e9cnicas y gesti\u00f3n de flujos de se\u00f1al digital.'},
+  {title:'T\u00e9cnico en Operaciones de Sistemas Inform\u00e1ticos', company:'', date:'Ene 2022 \u2014 May 2022', desc:'Soporte a infraestructura TI, operaciones de sistemas, monitorizaci\u00f3n y resoluci\u00f3n de incidencias t\u00e9cnicas.'},
+  {title:'Analista Programador de Sistemas', company:'', date:'Nov 2009 \u2014 Mar 2021', desc:'An\u00e1lisis, dise\u00f1o e implementaci\u00f3n de sistemas inform\u00e1ticos. Desarrollo de software, administraci\u00f3n de bases de datos, soporte a infraestructura y automatizaci\u00f3n de procesos durante m\u00e1s de 11 a\u00f1os.'},
+  {title:'Docencia Universitaria \u2014 Conmutaci\u00f3n de Redes', company:'', date:'Jul 2018 \u2014 Ene 2020', desc:'Formaci\u00f3n avanzada en arquitecturas de redes, conmutaci\u00f3n de circuitos y paquetes, protocolos nivel 2, segmentaci\u00f3n, QoS y dise\u00f1o de infraestructuras de comunicaciones.'}
+];
+
+const SKILLS_DATA = [
+  {name:'Linux / Windows Server', pct:95},
+  {name:'Redes y Virtualizaci\u00f3n', pct:90},
+  {name:'Seguridad Inform\u00e1tica', pct:85},
+  {name:'Hardening / Vulnerabilidades', pct:80},
+  {name:'Python', pct:85},
+  {name:'SQL / Bases de Datos', pct:85},
+  {name:'Power BI / Fabric', pct:75},
+  {name:'Machine Learning', pct:70},
+  {name:'Selenium / Cypress', pct:85},
+  {name:'API Testing (Postman, REST)', pct:80},
+  {name:'Testing Manual / Casos de prueba', pct:90},
+  {name:'Git / CI/CD', pct:75},
+  {name:'Comunicaci\u00f3n y Docencia', pct:95},
+  {name:'Trabajo en Equipo', pct:90},
+  {name:'Resoluci\u00f3n de Problemas', pct:95},
+  {name:'Pensamiento Anal\u00edtico', pct:90},
+  {name:'Adaptabilidad', pct:85}
+];
+
+const CERTS_DATA = [
+  {name:'M.S.C. Ciencias de la Computaci\u00f3n', issuer:'Universidad Centro Occidental "Lisandro Alvarado" \u00b7 2012-2017'},
+  {name:'Ingenier\u00eda en Inform\u00e1tica', issuer:'Universidad Centro Occidental "Lisandro Alvarado"'},
+  {name:'Iniciaci\u00f3n a Python', issuer:'Certificaci\u00f3n oficial de fundamentos de Python'},
+  {name:'Programa IBM \u2014 Desarrollador Software', issuer:'Aplicaciones e-Business \u00b7 IBM'},
+  {name:'Visualizaci\u00f3n de Datos con Excel', issuer:'An\u00e1lisis y dashboards con Excel avanzado'},
+  {name:'Docencia FP para el Empleo', issuer:'Certificado de Profesionalidad \u00b7 Formador Ocupacional'},
+  {name:'Seguridad Inform\u00e1tica', issuer:'Certificado de Profesionalidad IFCT0109'},
+  {name:'Excel Avanzado', issuer:'Tablas din\u00e1micas, Power Query y dashboards'},
+  {name:'Buenas Pr\u00e1cticas en Ciberseguridad', issuer:'Fundamentos de seguridad ofensiva y defensiva'},
+  {name:'Big Data. Extrayendo conocimiento de los datos', issuer:'An\u00e1lisis masivo de datos y t\u00e9cnicas de extracci\u00f3n de conocimiento'}
+];
+
+function renderCVGrid(){
+  const grid = document.getElementById('cvGrid');
+  grid.innerHTML = CV_PROFILES.map(p => `
+    <div class="cv-card reveal" onclick="generateCV('${p.id}')">
+      <div class="icon">${p.icon}</div>
+      <h3>${p.title}</h3>
+      <p>${p.summary.slice(0,120)}...</p>
+      <span class="badge ${p.badge}">${p.badgeText}</span>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+
+async function generateCV(profileId){
+  const p = CV_PROFILES.find(x => x.id === profileId);
+  if(!p) return;
+
+  /* build PDF HTML */
+  const expHTML = p.exp.map(i => EXP_DATA[i]).map(e => `
+    <div style="margin-bottom:10px">
+      <div style="font-weight:700;font-size:13px;color:#111">${e.title}</div>
+      <div style="font-size:11px;color:#666;margin:2px 0">${e.date}</div>
+      <div style="font-size:11px;color:#444;line-height:1.5">${e.desc}</div>
+    </div>
+  `).join('');
+
+  const skillHTML = p.focusSkills.map(s => {
+    const sk = SKILLS_DATA.find(x => x.name === s);
+    return `<div style="margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#333;margin-bottom:2px">
+        <span>${s}</span><span>${sk ? sk.pct + '%' : ''}</span>
+      </div>
+      <div style="height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${sk ? sk.pct : 70}%;background:linear-gradient(90deg,#00b4d8,#0077b6);border-radius:3px"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const certHTML = p.certs.map(i => CERTS_DATA[i]).map(c => `
+    <div style="margin-bottom:6px;font-size:11px;color:#333">
+      <span style="font-weight:600">${c.name}</span><br><span style="color:#666;font-size:10px">${c.issuer}</span>
+    </div>
+  `).join('');
+
+  const html = `
+  <div id="cvPdf" style="
+    font-family:Arial,Helvetica,sans-serif;max-width:210mm;margin:0 auto;
+    background:#fff;color:#222;padding:0;position:relative
+  ">
+  <table style="width:100%;border-collapse:collapse">
+  <tr>
+    <td style="width:62%;padding:30px 25px 25px 30px;vertical-align:top">
+      <h1 style="font-size:22px;color:#001f3f;margin:0 0 2px">Randy Bonucci Mart\u00edn</h1>
+      <div style="font-size:13px;color:#0077b6;font-weight:600;margin-bottom:12px">${p.title}</div>
+
+      <div style="font-size:11.5px;color:#444;line-height:1.6;margin-bottom:16px;border-left:3px solid #0077b6;padding-left:10px">
+        ${p.summary}
+      </div>
+
+      <h2 style="font-size:14px;color:#001f3f;border-bottom:2px solid #0077b6;padding-bottom:4px;margin:0 0 10px">Experiencia Profesional</h2>
+      ${expHTML || '<div style="font-size:11px;color:#999;font-style:italic">Experiencia af\u00edn en proceso de actualizaci\u00f3n</div>'}
+
+      ${certHTML ? `
+      <h2 style="font-size:14px;color:#001f3f;border-bottom:2px solid #0077b6;padding-bottom:4px;margin:16px 0 10px">Certificaciones</h2>
+      ${certHTML}` : ''}
+
+      <h2 style="font-size:14px;color:#001f3f;border-bottom:2px solid #0077b6;padding-bottom:4px;margin:16px 0 10px">Formaci\u00f3n Acad\u00e9mica</h2>
+      <div style="margin-bottom:5px;font-size:11.5px;color:#333"><strong>M.S.C. Ciencias de la Computaci\u00f3n</strong><br><span style="color:#666;font-size:10px">Universidad Centro Occidental "Lisandro Alvarado" \u00b7 2012-2017</span></div>
+      <div style="font-size:11.5px;color:#333"><strong>Ingenier\u00eda en Inform\u00e1tica</strong><br><span style="color:#666;font-size:10px">Universidad Centro Occidental "Lisandro Alvarado"</span></div>
+      <div style="margin-top:8px;font-size:11px;color:#666">Bootcamp Data &amp; IA \u2014 Upgrade Hub \u00b7 2026</div>
+    </td>
+    <td style="width:38%;padding:30px 20px 25px 20px;vertical-align:top;background:#f0f7fa">
+      <div style="margin-bottom:18px">
+        <h3 style="font-size:12px;color:#001f3f;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px;border-bottom:1px solid #b3d9e8;padding-bottom:4px">Contacto</h3>
+        <div style="font-size:11px;color:#444;line-height:1.8">
+          <div>Canarias, Espa\u00f1a</div>
+          <div>Disponibilidad: Remoto / Presencial</div>
+          <div>Incorporaci\u00f3n: Inmediata</div>
+          <div style="margin-top:4px">Espa\u00f1ol (Nativo) \u00b7 Ingl\u00e9s (B1)</div>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <h3 style="font-size:12px;color:#001f3f;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px;border-bottom:1px solid #b3d9e8;padding-bottom:4px">Competencias Clave</h3>
+        ${skillHTML}
+      </div>
+      <div style="margin-bottom:18px">
+        <h3 style="font-size:12px;color:#001f3f;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px;border-bottom:1px solid #b3d9e8;padding-bottom:4px">Soft Skills</h3>
+        <div style="font-size:11px;color:#444;line-height:1.8">
+          <div>Comunicaci\u00f3n y Docencia</div>
+          <div>Trabajo en Equipo</div>
+          <div>Resoluci\u00f3n de Problemas</div>
+          <div>Pensamiento Anal\u00edtico</div>
+          <div>Adaptabilidad</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:12px;color:#001f3f;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px;border-bottom:1px solid #b3d9e8;padding-bottom:4px">En l\u00ednea</h3>
+        <div style="font-size:10px;color:#0077b6;line-height:1.7;word-break:break-all">
+          <div>linkedin.com/in/randy-bonucci-mart\u00edn-b60824209</div>
+          <div>github.com/randyb12019-repo2026</div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </table>
+  </div>`;
+
+  /* create temporary container, render, export */
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  document.body.appendChild(div);
+  const el = document.getElementById('cvPdf');
+
+  try {
+    await html2pdf().set({
+      margin:[10,10,10,10], filename:`CV_RandyBonucci_${p.title.replace(/[^a-zA-Z0-9]/g,'_')}.pdf`,
+      html2canvas:{scale:2,letterRendering:true,useCORS:true},
+      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+    }).from(el).save();
+  } catch(e) {
+    console.error('PDF error:', e);
+    alert('Error al generar el PDF. Intenta de nuevo.');
+  }
+  document.body.removeChild(div);
+}
+
+/* init cv grid on dom ready */
+document.addEventListener('DOMContentLoaded', renderCVGrid);
 </script>
 
 </body>
