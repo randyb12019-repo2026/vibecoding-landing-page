@@ -1,3 +1,5 @@
 {
-  "outputDirectory": "."
+  "redirects": [
+    { "source": "/(.*)", "destination": "https://quiet-marzipan-05d32e.netlify.app/$1", "permanent": false }
+  ]
 }
