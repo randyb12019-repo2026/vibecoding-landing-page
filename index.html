@@ -486,7 +486,7 @@ footer .heart{color:var(--accent)}
 
 /* CV Section */
 .cv-section{position:relative;z-index:1;padding:5rem 2rem}
-.cv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;max-width:1200px;margin:0 auto}
+.cv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:1200px;margin:0 auto}
 .cv-card{
   background:var(--surface);border:1px solid rgba(0,240,255,0.08);border-radius:12px;
   padding:1.5rem;cursor:pointer;transition:.3s;position:relative;overflow:hidden
@@ -1548,16 +1548,16 @@ function triggerInput() {
 // ─── CV PDF Generator ──────────────────────────────────────────
 const CV_PROFILES = [
   {
-    id:'ciberseguridad', icon:'\u{1f6e1}\u{fe0f}', title:'Analista de Ciberseguridad',
-    badge:'cyan', badgeText:'Alta demanda',
-    summary:'Profesional de la ciberseguridad con s\u00f3lida experiencia en hardening, an\u00e1lisis de vulnerabilidades y formaci\u00f3n en seguridad inform\u00e1tica. Capacidad para dise\u00f1ar e implementar pol\u00edticas de seguridad, realizar auditor\u00edas t\u00e9cnicas y proteger infraestructuras cr\u00edticas.',
-    exp:[0,3], skills:[0,1,2,3], certs:[6,8], focusSkills:['Linux / Windows Server','Seguridad Inform\u00e1tica','Hardening / Vulnerabilidades','Redes y Virtualizaci\u00f3n']
-  },
-  {
     id:'data-ia', icon:'\u{1f4ca}', title:'Data & IA Analyst',
     badge:'purple', badgeText:'M\u00e1xima demanda',
     summary:'Analista de datos e inteligencia artificial con formaci\u00f3n avanzada en machine learning, estad\u00edstica y visualizaci\u00f3n. Experiencia en extracci\u00f3n, limpieza y an\u00e1lisis de datos con Python, SQL y Power BI. Capacidad para aplicar IA a la ciberseguridad y automatizaci\u00f3n inteligente.',
     exp:[3], skills:[4,5,6,7], certs:[2,4,7,9], focusSkills:['Python','Machine Learning','SQL / Bases de Datos','Power BI / Fabric']
+  },
+  {
+    id:'ciberseguridad', icon:'\u{1f6e1}\u{fe0f}', title:'Analista de Ciberseguridad',
+    badge:'cyan', badgeText:'Alta demanda',
+    summary:'Profesional de la ciberseguridad con s\u00f3lida experiencia en hardening, an\u00e1lisis de vulnerabilidades y formaci\u00f3n en seguridad inform\u00e1tica. Capacidad para dise\u00f1ar e implementar pol\u00edticas de seguridad, realizar auditor\u00edas t\u00e9cnicas y proteger infraestructuras cr\u00edticas.',
+    exp:[0,3], skills:[0,1,2,3], certs:[6,8], focusSkills:['Linux / Windows Server','Seguridad Inform\u00e1tica','Hardening / Vulnerabilidades','Redes y Virtualizaci\u00f3n']
   },
   {
     id:'devops', icon:'\u{2699}\u{fe0f}', title:'DevOps & Infraestructura IT',
