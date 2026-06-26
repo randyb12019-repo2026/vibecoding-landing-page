@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-const BOT_TOKEN = '8954748594:AAHxHA3GCkHmaG5q-tZhkxV-DAVbc5I0NTo';
+const BOT_TOKEN = process.env.BOT_TOKEN || '8954748594:AAHxHA3GCkHmaG5q-tZhkxV-DAVbc5I0NTo';
 const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 
 app.post('/webhook', async (req, res) => {
