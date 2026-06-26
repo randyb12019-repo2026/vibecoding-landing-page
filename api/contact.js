@@ -1,4 +1,4 @@
-export default async (req, res) => {
+module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
@@ -10,13 +10,10 @@ Empresa: ${company || '(no especificada)'}
 Motivo: ${reason}
 Mensaje: ${message}`;
 
-    const token = process.env.BOT_TOKEN || '8954748594:AAHxHA3GCkHmaG5q-tZhkxV-DAVbc5I0NTo';
-    const chatId = process.env.CHAT_ID || '6446460318';
-
-    const resp = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const resp = await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text })
+      body: JSON.stringify({ chat_id: process.env.CHAT_ID, text })
     });
 
     const data = await resp.json();
