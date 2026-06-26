@@ -2,5 +2,6 @@
   "functions": {
     "api/webhook.js": { "memory": 128, "maxDuration": 10 },
     "api/contact.js": { "memory": 128, "maxDuration": 10 }
-  }
+  },
+  "outputDirectory": "."
 }
