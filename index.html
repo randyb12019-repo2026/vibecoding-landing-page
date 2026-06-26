@@ -6,7 +6,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Randy Bonucci Martín | Ciberseguridad & IA</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -1669,24 +1668,19 @@ async function generateCV(profileId){
     </div>
   `).join('');
 
-  const el = document.createElement('div');
-  el.id = 'cvPdfGen';
-  el.style.cssText = 'position:fixed;top:0;left:0;width:794px;opacity:0;pointer-events:none;z-index:-9999';
-  el.innerHTML = '<div style="font-family:Arial,Helvetica,sans-serif;background:#fff;color:#222;line-height:1.4"><table style="width:100%;border-collapse:collapse"><tr><td style="width:62%;padding:20px 20px 15px 20px;vertical-align:top"><div style="font-size:20px;font-weight:700;color:#001f3f;margin:0 0 2px">Randy Bonucci Mart\u00edn</div><div style="font-size:12px;color:#0077b6;font-weight:600;margin-bottom:10px">' + p.title + '</div><div style="border-left:3px solid #0077b6;padding-left:8px;margin-bottom:12px;color:#444;font-size:11px;line-height:1.5">' + p.summary + '</div><div style="font-size:13px;font-weight:700;color:#001f3f;border-bottom:2px solid #0077b6;padding-bottom:3px;margin:12px 0 8px">Experiencia Profesional</div>' + (expHTML || '<div style="font-size:10px;color:#999;font-style:italic">Experiencia af\u00edn en proceso de actualizaci\u00f3n</div>') + (certHTML ? '<div style="font-size:13px;font-weight:700;color:#001f3f;border-bottom:2px solid #0077b6;padding-bottom:3px;margin:12px 0 8px">Certificaciones</div>' + certHTML : '') + '<div style="font-size:13px;font-weight:700;color:#001f3f;border-bottom:2px solid #0077b6;padding-bottom:3px;margin:12px 0 8px">Formaci\u00f3n Acad\u00e9mica</div><div style="margin-bottom:4px"><strong>M.S.C. Ciencias de la Computaci\u00f3n</strong><br><span style="color:#666;font-size:9px">Universidad Centro Occidental "Lisandro Alvarado" \u00b7 2012-2017</span></div><div style="margin-bottom:4px"><strong>Ingenier\u00eda en Inform\u00e1tica</strong><br><span style="color:#666;font-size:9px">Universidad Centro Occidental "Lisandro Alvarado"</span></div><div style="font-size:10px;color:#666">Bootcamp Data &amp; IA \u2014 Upgrade Hub \u00b7 2026</div></td><td style="width:38%;padding:20px 15px 15px 15px;vertical-align:top;background:#f0f7fa"><div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#001f3f;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #b3d9e8;padding-bottom:3px;margin:0 0 6px">Contacto</div><div style="font-size:10px;color:#444;line-height:1.7"><div>Canarias, Espa\u00f1a</div><div>Disponibilidad: Remoto / Presencial</div><div>Incorporaci\u00f3n: Inmediata</div><div style="margin-top:3px">Espa\u00f1ol (Nativo) \u00b7 Ingl\u00e9s (B1)</div></div></div><div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#001f3f;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #b3d9e8;padding-bottom:3px;margin:0 0 6px">Competencias Clave</div>' + skillHTML + '</div><div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#001f3f;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #b3d9e8;padding-bottom:3px;margin:0 0 6px">Soft Skills</div><div style="font-size:10px;color:#444;line-height:1.7"><div>Comunicaci\u00f3n y Docencia</div><div>Trabajo en Equipo</div><div>Resoluci\u00f3n de Problemas</div><div>Pensamiento Anal\u00edtico</div><div>Adaptabilidad</div></div></div><div><div style="font-size:11px;font-weight:700;color:#001f3f;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #b3d9e8;padding-bottom:3px;margin:0 0 6px">En l\u00ednea</div><div style="font-size:9px;color:#0077b6;line-height:1.6;word-break:break-all"><div>linkedin.com/in/randy-bonucci-mart\u00edn-b60824209</div><div>github.com/randyb12019-repo2026</div></div></div></td></tr></table></div>';
-  document.body.appendChild(el);
+  const html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>CV_Randy_Bonucci_' + p.title.replace(/[^a-zA-Z0-9]/g,'_') + '</title><style>@page{margin:15mm 10mm}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#222;line-height:1.4;width:190mm}table{width:100%;border-collapse:collapse}td.main{width:62%;padding:20px 20px 15px 20px;vertical-align:top}td.side{width:38%;padding:20px 15px 15px 15px;vertical-align:top;background:#f0f7fa}h1{font-size:20px;color:#001f3f;margin:0 0 2px}.sub{font-size:12px;color:#0077b6;font-weight:600;margin-bottom:10px}.sum{border-left:3px solid #0077b6;padding-left:8px;margin-bottom:12px;color:#444;font-size:11px;line-height:1.5}.sep{font-size:13px;font-weight:700;color:#001f3f;border-bottom:2px solid #0077b6;padding-bottom:3px;margin:12px 0 8px}.side-h{font-size:11px;font-weight:700;color:#001f3f;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #b3d9e8;padding-bottom:3px;margin:0 0 6px}@media print{body{width:auto}}</style></head><body><table><tr><td class="main"><h1>Randy Bonucci Mart\u00edn</h1><div class="sub">' + p.title + '</div><div class="sum">' + p.summary + '</div><div class="sep">Experiencia Profesional</div>' + (expHTML || '<div style="font-size:10px;color:#999;font-style:italic">Experiencia af\u00edn en proceso de actualizaci\u00f3n</div>') + (certHTML ? '<div class="sep">Certificaciones</div>' + certHTML : '') + '<div class="sep">Formaci\u00f3n Acad\u00e9mica</div><div style="margin-bottom:4px"><strong>M.S.C. Ciencias de la Computaci\u00f3n</strong><br><span style="color:#666;font-size:9px">Universidad Centro Occidental "Lisandro Alvarado" \u00b7 2012-2017</span></div><div style="margin-bottom:4px"><strong>Ingenier\u00eda en Inform\u00e1tica</strong><br><span style="color:#666;font-size:9px">Universidad Centro Occidental "Lisandro Alvarado"</span></div><div style="font-size:10px;color:#666">Bootcamp Data &amp; IA \u2014 Upgrade Hub \u00b7 2026</div></td><td class="side"><div style="margin-bottom:14px"><div class="side-h">Contacto</div><div style="font-size:10px;color:#444;line-height:1.7"><div>Canarias, Espa\u00f1a</div><div>Disponibilidad: Remoto / Presencial</div><div>Incorporaci\u00f3n: Inmediata</div><div style="margin-top:3px">Espa\u00f1ol (Nativo) \u00b7 Ingl\u00e9s (B1)</div></div></div><div style="margin-bottom:14px"><div class="side-h">Competencias Clave</div>' + skillHTML + '</div><div style="margin-bottom:14px"><div class="side-h">Soft Skills</div><div style="font-size:10px;color:#444;line-height:1.7"><div>Comunicaci\u00f3n y Docencia</div><div>Trabajo en Equipo</div><div>Resoluci\u00f3n de Problemas</div><div>Pensamiento Anal\u00edtico</div><div>Adaptabilidad</div></div></div><div><div class="side-h">En l\u00ednea</div><div style="font-size:9px;color:#0077b6;line-height:1.6;word-break:break-all"><div>linkedin.com/in/randy-bonucci-mart\u00edn-b60824209</div><div>github.com/randyb12019-repo2026</div></div></div></td></tr></table></body></html>';
 
-  try {
-    await html2pdf().set({
-      margin:[10,10,10,10],
-      filename:'CV_RandyBonucci_' + p.title.replace(/[^a-zA-Z0-9]/g,'_') + '.pdf',
-      image:{type:'jpeg',quality:.98},
-      html2canvas:{scale:2,useCORS:true},
-      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
-    }).from(el).save();
-  } catch(e) {
-    console.error('PDF error:', e);
-  }
-  document.body.removeChild(el);
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'position:fixed;top:-9999px;left:0;width:794px;height:600px';
+  document.body.appendChild(iframe);
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open();
+  doc.write(html);
+  doc.close();
+  setTimeout(function(){
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+  }, 800);
 }
 
 /* init cv grid on dom ready */
