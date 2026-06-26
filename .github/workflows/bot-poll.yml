@@ -7,97 +7,22 @@ on:
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-  CHAT_ID: ${{ secrets.CHAT_ID }}
 
 jobs:
   poll:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Restore offset
         id: cache
         uses: actions/cache@v4
         with:
           path: offset.txt
-          key: telegram-offset-${{ github.run_id }}
-          restore-keys: telegram-offset-
-
-      - name: Poll Telegram
-        run: |
-          OFFSET=""
-          if [ -f offset.txt ]; then
-            OFFSET=$(cat offset.txt)
-          fi
-
-          URL="https://api.telegram.org/bot$BOT_TOKEN/getUpdates?timeout=5"
-          [ -n "$OFFSET" ] && URL="$URL&offset=$OFFSET"
-
-          echo "Fetching updates..."
-          RESP=$(curl -s "$URL")
-          echo "Response: $RESP"
-
-          UPDATES=$(echo "$RESP" | python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-updates = data.get('result', [])
-print(len(updates))
-for u in updates:
-    print(u['update_id'])
-    msg = u.get('message', {})
-    chat_id = msg.get('chat', {}).get('id', '')
-    text = msg.get('text', '') or ''
-    print(chat_id)
-    print(text)
-")
-
-          readarray -t LINES <<< "$UPDATES"
-          COUNT=${LINES[0]}
-          echo "Updates count: $COUNT"
-
-          if [ "$COUNT" -gt 0 ]; then
-            LAST_IDX=$((COUNT * 3))
-            LAST_OFFSET=${LINES[$LAST_IDX]}
-            echo "Last update_id: $LAST_OFFSET"
-            echo "$LAST_OFFSET" > offset.txt
-
-            for ((i=1; i<=COUNT; i++)); do
-              IDX=$((i * 3))
-              UPDATE_ID=${LINES[$((IDX - 2))]}
-              CID=${LINES[$((IDX - 1))]}
-              TXT=${LINES[$IDX]}
-
-              if [ -z "$CID" ]; then
-                continue
-              fi
-
-              if [[ "$TXT" == /start* ]]; then
-                REPLY=$(cat <<'ENDREPLY'
-\u2705 \u00a1Hola! Soy el asistente de Randy Bonucci.
-Soy Ingeniero Inform\u00e1tico especializado en Ciberseguridad, Data Analytics e IA.
-\u00bfEn qu\u00e9 puedo ayudarte?
-ENDREPLY
-)
-              else
-                REPLY=$(cat <<'ENDREPLY'
-\u2705 Tu mensaje ha sido recibido. Randy lo revisar\u00e1 y te responder\u00e1 pronto.
-\u23f3 Tiempo estimado de respuesta: < 24h.
-\u200b linkedin.com/in/randy-bonucci-mart\u00edn-b60824209
-ENDREPLY
-)
-              fi
-
-              curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
-                -H "Content-Type: application/json" \
-                -d "{\"chat_id\":$CID,\"text\":\"$REPLY\"}"
-              echo "Replied to chat $CID"
-            done
-          fi
-        shell: bash
-
+          key: telegram-offset-v1
+      - name: Run poll
+        run: python3 scripts/bot_poll.py
       - name: Save offset
         uses: actions/cache@v4
         with:
           path: offset.txt
-          key: telegram-offset-${{ github.run_id }}
+          key: telegram-offset-v1
