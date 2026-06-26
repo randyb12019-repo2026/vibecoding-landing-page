@@ -1,10 +1,14 @@
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') return res.status(200).send('Bot activo');
+const express = require('express');
+const app = express();
+app.use(express.json());
 
+const BOT_TOKEN = '8954748594:AAHxHA3GCkHmaG5q-tZhkxV-DAVbc5I0NTo';
+const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
+
+app.post('/webhook', async (req, res) => {
   try {
     const msg = req.body.message;
-    if (!msg) return res.status(200).end();
-
+    if (!msg) return res.sendStatus(200);
     const chatId = msg.chat.id;
     const text = msg.text || '';
     let reply = '';
@@ -22,16 +26,20 @@ module.exports = async (req, res) => {
         + '\u{1f4ce} linkedin.com/in/randy-bonucci-mart\u00edn-b60824209';
     }
 
-    const token = process.env.BOT_TOKEN || '8954748594:AAHxHA3GCkHmaG5q-tZhkxV-DAVbc5I0NTo';
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    await fetch(`${TELEGRAM_API}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: chatId, text: reply })
     });
 
-    res.status(200).end();
+    res.sendStatus(200);
   } catch (e) {
     console.error(e);
-    res.status(200).end();
+    res.sendStatus(200);
   }
-};
+});
+
+app.get('/', (req, res) => res.send('Bot activo'));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Bot corriendo en puerto ${PORT}`));

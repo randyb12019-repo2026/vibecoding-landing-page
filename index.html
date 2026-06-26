@@ -1169,8 +1169,7 @@ document.querySelectorAll('#navMenu a').forEach(link => {
 });
 
 // ===== CHATBOT =====
-const TELEGRAM_BOT_TOKEN = '8954748594:AAHxHA3GCkHmaG5q-tZhkxV-DAVbc5I0NTo';
-const TELEGRAM_CHAT_ID = '6446460318';
+const API_CONTACT = '/api/contact';
 
 const chatOverlay = document.getElementById('chatOverlay');
 const chatBody = document.getElementById('chatBody');
@@ -1386,15 +1385,15 @@ function showSummary() {
         '\u{1f4dd} Mensaje:\n' + collectedData.message + '\n\n' +
         '--- Enviado desde el asistente web';
 
-      const formData = new URLSearchParams();
-      formData.append('chat_id', TELEGRAM_CHAT_ID);
-      formData.append('text', msgTexto);
-      formData.append('parse_mode', 'HTML');
-
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      await fetch(API_CONTACT, {
         method: 'POST',
-        mode: 'no-cors',
-        body: formData
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: collectedData.name,
+          company: collectedData.company,
+          reason: collectedData.reason,
+          message: collectedData.message
+        })
       });
 
       btn.textContent = '\u2705 Mensaje enviado';

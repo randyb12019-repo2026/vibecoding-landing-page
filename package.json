@@ -1,4 +1,5 @@
 {
   "name": "vibecoding-landing-page",
-  "private": true
+  "private": true,
+  "scripts": { "build": "echo ok" }
 }
