@@ -1,14 +1,15 @@
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+export const config = {
+  runtime: 'edge'
+};
+
+export default async (req) => {
+  if (req.method !== 'POST') {
+    return new Response('OK', { status: 200 });
+  }
 
   try {
-    const { name, company, reason, message } = req.body;
-
-    const text = `Nuevo contacto desde la web:
-Nombre: ${name}
-Empresa: ${company || '(no especificada)'}
-Motivo: ${reason}
-Mensaje: ${message}`;
+    const { name, company, reason, message } = await req.json();
+    const text = `Nuevo contacto desde la web:\nNombre: ${name}\nEmpresa: ${company || '(no especificada)'}\nMotivo: ${reason}\nMensaje: ${message}`;
 
     const resp = await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
       method: 'POST',
@@ -17,8 +18,14 @@ Mensaje: ${message}`;
     });
 
     const data = await resp.json();
-    res.status(resp.ok ? 200 : 500).json(data);
+    return new Response(JSON.stringify(data), {
+      status: resp.ok ? 200 : 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 };
