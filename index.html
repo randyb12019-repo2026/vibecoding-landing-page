@@ -1672,7 +1672,9 @@ function generateCV(profileId){
   const dateStr = now.toLocaleDateString('es-ES', {day:'numeric',month:'long',year:'numeric'});
   const timeStr = now.toLocaleTimeString('es-ES', {hour:'2-digit',minute:'2-digit'});
 
-  const html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title><style>'
+  const filename = 'CV_RandyBonucci_' + p.title.replace(/[^a-zA-Z0-9]/g,'_');
+
+  const html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + filename + '</title><style>'
     + '@page{margin:18mm 15mm}'
     + 'body{font-family:Arial,sans-serif;font-size:11px;color:#222;line-height:1.5;margin:0;padding:0}'
     + '.top{text-align:right;font-size:10px;color:#888;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #ccc}'
@@ -1721,11 +1723,9 @@ function generateCV(profileId){
     + '</tr></table>'
   + '</body></html>';
 
-  const win = window.open('', '_blank');
-  win.document.write(html);
-  win.document.title = '';
-  win.document.close();
-  setTimeout(function(){ win.print(); }, 600);
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
 }
 
 /* init cv grid on dom ready */
