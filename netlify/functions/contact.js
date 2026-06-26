@@ -14,16 +14,21 @@ exports.handler = async (event) => {
   try {
     const { name, company, reason, message } = JSON.parse(event.body);
 
-    const text = `Nuevo contacto desde la web:
-Nombre: ${name}
-Empresa: ${company || '(no especificada)'}
-Motivo: ${reason}
-Mensaje: ${message}`;
+    const text = `<b>📩 Nuevo contacto desde la web</b>
+
+<b>👤 Nombre:</b> ${name}
+<b>🏢 Empresa:</b> ${company || '<i>No especificada</i>'}
+<b>📌 Motivo:</b> ${reason}
+
+<b>📝 Mensaje:</b>
+${message}
+
+<i>--- Enviado desde el asistente web ---</i>`;
 
     const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: CHAT_ID, text })
+      body: JSON.stringify({ chat_id: CHAT_ID, text, parse_mode: 'HTML' })
     });
 
     const data = await resp.json();
