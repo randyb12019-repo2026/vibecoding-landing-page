@@ -1671,34 +1671,27 @@ function generateCV(profileId){
     </div>
   `).join('');
 
-  // overlay iframe for print preview (works on mobile, no popup blocker)
   const overlay = document.createElement('div');
   overlay.id = 'cvOverlay';
   overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:#fff';
-  
+
   const iframe = document.createElement('iframe');
   iframe.style.cssText = 'width:100%;height:100%;border:none';
-  
+  iframe.title = 'CV';
+
   const closeBtn = document.createElement('button');
   closeBtn.textContent = '\u2715';
-  closeBtn.style.cssText = 'position:fixed;top:10px;right:10px;z-index:10000;background:#0a0e17;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer';
-  
+  closeBtn.style.cssText = 'position:fixed;top:10px;right:10px;z-index:10000;background:#0a0e17;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer;font-family:sans-serif;line-height:1';
+
   overlay.appendChild(closeBtn);
   overlay.appendChild(iframe);
   document.body.appendChild(overlay);
 
   const css = '<style>'
     + '@page{margin:18mm 15mm}'
-    + 'body{margin:0;padding:0;background:#fff}'
-    + '#cv{display:none}'
-    + '.msg{text-align:center;padding-top:45vh;font-family:sans-serif;color:#aaa;font-size:14px}'
+    + 'body{margin:0;padding:0;background:#fff;font-family:Arial,sans-serif;font-size:11px;color:#222;line-height:1.5}'
     + '.footer{display:none;text-align:center;font-size:10px;color:#888;margin-top:20px;padding-top:8px;border-top:1px solid #ccc}'
-    + '@media print{'
-    + 'body{background:none}'
-    + '#cv{display:block;font-family:Arial,sans-serif;font-size:11px;color:#222;line-height:1.5}'
-    + '.msg{display:none}'
-    + '.footer{display:block}'
-    + '}'
+    + '@media print{.footer{display:block}}'
     + 'table{width:100%;border-collapse:collapse}'
     + 'td.l{width:62%;padding-right:20px;vertical-align:top}'
     + 'td.r{width:38%;vertical-align:top;background:#f0f7fa;padding:12px;border-radius:4px}'
@@ -1709,9 +1702,7 @@ function generateCV(profileId){
     + '.sh{font-size:11px;font-weight:700;color:#001f3f;text-transform:uppercase;border-bottom:1px solid #b3d9e8;padding-bottom:3px;margin:0 0 6px}'
   + '</style>';
 
-  const body = '<body>'
-    + '<div class="msg">Preparando PDF...</div>'
-    + '<div id="cv">'
+  const body = '<body><div class="footer">Curriculum Vitae</div>'
     + '<table><tr>'
     + '<td class="l">'
       + '<h1>Randy Bonucci Mart\u00edn</h1>'
@@ -1744,12 +1735,10 @@ function generateCV(profileId){
       + '</div></div>'
     + '</td>'
     + '</tr></table>'
-    + '<div class="footer">Curriculum Vitae</div>'
-    + '</div>'
-    + '<script>setTimeout(function(){window.print()},500);<\/script>'
   + '</body>';
 
   iframe.srcdoc = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title>' + css + '</head>' + body;
+  iframe.onload = () => iframe.contentWindow.print();
   closeBtn.onclick = () => document.body.removeChild(overlay);
 }
 
