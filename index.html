@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'self'; form-action 'self'; base-uri 'self';">
 <title>Randy Bonucci Martín | Ciberseguridad & IA</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -1553,37 +1554,37 @@ const CV_PROFILES = [
     id:'data-ia', icon:'\u{1f4ca}', title:'Data & IA Analyst',
     badge:'purple', badgeText:'M\u00e1xima demanda',
     summary:'Analista de datos e inteligencia artificial con formaci\u00f3n avanzada en machine learning, estad\u00edstica y visualizaci\u00f3n. Experiencia en extracci\u00f3n, limpieza y an\u00e1lisis de datos con Python, SQL y Power BI. Capacidad para aplicar IA a la ciberseguridad y automatizaci\u00f3n inteligente.',
-    exp:[3], skills:[4,5,6,7], certs:[2,4,7,9], focusSkills:['Python','Machine Learning','SQL / Bases de Datos','Power BI / Fabric']
+    exp:[3], skills:[4,5,6,7], certs:[0,2,3,5], education:[0,1], focusSkills:['Python','Machine Learning','SQL / Bases de Datos','Power BI / Fabric']
   },
   {
     id:'ciberseguridad', icon:'\u{1f6e1}\u{fe0f}', title:'Analista de Ciberseguridad',
     badge:'cyan', badgeText:'Alta demanda',
     summary:'Profesional de la ciberseguridad con s\u00f3lida experiencia en hardening, an\u00e1lisis de vulnerabilidades y formaci\u00f3n en seguridad inform\u00e1tica. Capacidad para dise\u00f1ar e implementar pol\u00edticas de seguridad, realizar auditor\u00edas t\u00e9cnicas y proteger infraestructuras cr\u00edticas.',
-    exp:[0,3], skills:[0,1,2,3], certs:[6,8], focusSkills:['Linux / Windows Server','Seguridad Inform\u00e1tica','Hardening / Vulnerabilidades','Redes y Virtualizaci\u00f3n']
+    exp:[0,3], skills:[0,1,2,3], certs:[4], education:[2,4], focusSkills:['Linux / Windows Server','Seguridad Inform\u00e1tica','Hardening / Vulnerabilidades','Redes y Virtualizaci\u00f3n']
   },
   {
     id:'devops', icon:'\u{2699}\u{fe0f}', title:'DevOps & Infraestructura IT',
     badge:'green', badgeText:'Alta demanda',
     summary:'Administrador de sistemas con experiencia en operaciones IT, virtualizaci\u00f3n, redes y automatizaci\u00f3n. Conocimiento avanzado de Linux, Windows Server y monitorizaci\u00f3n. Enfoque en infraestructura como c\u00f3digo y continuidad operativa.',
-    exp:[1,2,3], skills:[0,1,11], certs:[6], focusSkills:['Linux / Windows Server','Redes y Virtualizaci\u00f3n','Git / CI/CD','Seguridad Inform\u00e1tica']
+    exp:[1,2,3], skills:[0,1,11], certs:[], education:[2,4], focusSkills:['Linux / Windows Server','Redes y Virtualizaci\u00f3n','Git / CI/CD','Seguridad Inform\u00e1tica']
   },
   {
     id:'qa', icon:'\u{1f4a1}', title:'QA & Automation Engineer',
     badge:'orange', badgeText:'Demanda creciente',
     summary:'Ingeniero de calidad con amplia experiencia en pruebas automatizadas y manuales. Dominio de Selenium, Cypress y API testing. Enfoque en garantizar la calidad del software mediante metodolog\u00edas \u00e1giles y pipelines CI/CD.',
-    exp:[3], skills:[8,9,10,11], certs:[2], focusSkills:['Selenium / Cypress','API Testing (Postman, REST)','Testing Manual / Casos de prueba','Git / CI/CD']
+    exp:[3], skills:[8,9,10,11], certs:[0], education:[1], focusSkills:['Selenium / Cypress','API Testing (Postman, REST)','Testing Manual / Casos de prueba','Git / CI/CD']
   },
   {
     id:'docencia', icon:'\u{1f3eb}', title:'Docente T\u00e9cnico / Formador IT',
     badge:'pink', badgeText:'FP y Universidad',
     summary:'Docente con experiencia en formaci\u00f3n profesional y universitaria en ciberseguridad, redes y sistemas. Capacidad para transmitir conceptos t\u00e9cnicos complejos de forma clara. Certificado de profesionalidad como formador ocupacional.',
-    exp:[0,4], skills:[0,1,2,12], certs:[5,6], focusSkills:['Comunicaci\u00f3n y Docencia','Seguridad Inform\u00e1tica','Redes y Virtualizaci\u00f3n','Linux / Windows Server']
+    exp:[0,4], skills:[0,1,2,12], certs:[], education:[1,3,4], focusSkills:['Comunicaci\u00f3n y Docencia','Seguridad Inform\u00e1tica','Redes y Virtualizaci\u00f3n','Linux / Windows Server']
   },
   {
     id:'av-multimedia', icon:'\u{1f3ac}', title:'T\u00e9cnico Audiovisual y Sistemas',
     badge:'green', badgeText:'Hardware & Software',
     summary:'T\u00e9cnico especializado en instalaci\u00f3n, configuraci\u00f3n y operaci\u00f3n de equipos audiovisuales y sistemas multimedia. Experiencia en integraci\u00f3n hardware/software, resoluci\u00f3n de incidencias t\u00e9cnicas y gesti\u00f3n de flujos de se\u00f1al digital.',
-    exp:[1,3], skills:[0,1,10], certs:[], focusSkills:['Linux / Windows Server','Redes y Virtualizaci\u00f3n','Testing Manual / Casos de prueba']
+    exp:[1,3], skills:[0,1,10], certs:[], education:[2], focusSkills:['Linux / Windows Server','Redes y Virtualizaci\u00f3n','Testing Manual / Casos de prueba']
   }
 ];
 
@@ -1616,16 +1617,20 @@ const SKILLS_DATA = [
 ];
 
 const CERTS_DATA = [
-  {name:'M.S.C. Ciencias de la Computaci\u00f3n', issuer:'Universidad Centro Occidental "Lisandro Alvarado" \u00b7 2012-2017'},
-  {name:'Ingenier\u00eda en Inform\u00e1tica', issuer:'Universidad Centro Occidental "Lisandro Alvarado"'},
   {name:'Iniciaci\u00f3n a Python', issuer:'Certificaci\u00f3n oficial de fundamentos de Python'},
   {name:'Programa IBM \u2014 Desarrollador Software', issuer:'Aplicaciones e-Business \u00b7 IBM'},
   {name:'Visualizaci\u00f3n de Datos con Excel', issuer:'An\u00e1lisis y dashboards con Excel avanzado'},
-  {name:'Docencia FP para el Empleo', issuer:'Certificado de Profesionalidad \u00b7 Formador Ocupacional'},
-  {name:'Seguridad Inform\u00e1tica', issuer:'Certificado de Profesionalidad IFCT0109'},
   {name:'Excel Avanzado', issuer:'Tablas din\u00e1micas, Power Query y dashboards'},
   {name:'Buenas Pr\u00e1cticas en Ciberseguridad', issuer:'Fundamentos de seguridad ofensiva y defensiva'},
   {name:'Big Data. Extrayendo conocimiento de los datos', issuer:'An\u00e1lisis masivo de datos y t\u00e9cnicas de extracci\u00f3n de conocimiento'}
+];
+
+const EDUC_DATA = [
+  {title:'Bootcamp Data Analysis & AI', institution:'Upgrade Hub', date:'Feb 2026 \u2014 Dic 2026', type:'bootcamp'},
+  {title:'M.S.C. Ciencias de la Computaci\u00f3n', institution:'Universidad Centro Occidental "Lisandro Alvarado"', date:'2012 \u2014 2017', type:'grado'},
+  {title:'Ingenier\u00eda en Inform\u00e1tica', institution:'Universidad Centro Occidental "Lisandro Alvarado"', type:'grado'},
+  {title:'Docencia FP para el Empleo', institution:'Formador Ocupacional', type:'fp'},
+  {title:'Seguridad Inform\u00e1tica (IFCT0109)', institution:'IFCT0109', type:'fp'}
 ];
 
 function renderCVGrid(){

@@ -9,7 +9,18 @@
 - **Screen/print separation**: página en blanco con "Preparando PDF..." en pantalla; CV solo visible en vista previa de impresión
 - Eliminadas variables `now`, `dateStr`, `timeStr` no utilizadas
 
-### 2. Eliminación de GitHub Actions polling
+### 2. Vista previa CV con overlay iframe
+- Reemplazado `window.open('about:blank')` por overlay `<div>` + `<iframe>` en la misma página
+- Evita bloqueo de popups en móviles
+- `iframe.srcdoc` carga el CV
+- `iframe.onload` dispara `window.print()` sin demora ni mensaje intermedio
+- Eliminado mensaje "Preparando PDF...", el visor PDF se abre directamente
+- Simplificado layout: el CV siempre visible en el iframe, sin `#cv{display:none}` ni `@media print` wrapper
+
+### 3. Responsive CV grid
+- Añadido `@media(max-width:700px){.cv-grid{grid-template-columns:1fr}}` para stack vertical en móviles
+
+### 4. Eliminación de GitHub Actions polling
 - Eliminado archivo: `.github/workflows/bot-poll.yml`
 - El bot `@randy_contact_bot` ya no responde automáticamente a mensajes directos
 - El formulario de la landing page sigue funcionando via Netlify function (`netlify/functions/contact.js`)
