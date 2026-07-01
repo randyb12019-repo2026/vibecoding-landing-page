@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
       reply = '\u2705 Tu mensaje ha sido recibido. '
         + 'Randy lo revisar\u00e1 y te responder\u00e1 pronto.\n\n'
         + '\u23f3 Tiempo estimado de respuesta: < 24h.\n'
-        + '\u{1f4ce} linkedin.com/in/randy-bonucci-mart\u00edn-b60824209';
+        + '\u{1f4ce} linkedin.com/in/randybonucci';
     }
 
     const token = process.env.BOT_TOKEN || '8954748594:AAHxHA3GCkHmaG5q-tZhkxV-DAVbc5I0NTo';
